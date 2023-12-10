@@ -1,0 +1,57 @@
+backend:
+  name: "github"
+  #repo: "espiritismo-net/netlifycms-oauth-server"
+  repo: "espiritismo-net/hugo-espnet"
+  #branch: "decap-content" # Branch to update (optional; defaults to master)
+  branch: "sem-imagens2" # Branch to update (optional; defaults to master)
+  site_domain: "editor-site-firebase.web.app"
+  #base_url: "https://git-gateway.espiritismo.net"
+  base_url: https://us-central1-git-oauth-functions-firebase.cloudfunctions.net
+  auth_endpoint: "/oauth/auth"
+
+#media_folder: "www/static/images/cms"
+#public_folder: "/images/cms"
+media_folder: "www/static/imagens/noticias"
+public_folder: "noticias"
+locale: 'pt'
+
+collections:
+  - name: "noticia" # Used in routes, e.g., /admin/collections/blog
+    label: "Notícias Recentes" # Used in the UI
+    label_singular: "Notícia"
+    folder: "www/content/portuguese/noticias_recentes" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{slug}}/index" # Filename template, e.g., YYYY-MM-DD-title.md
+    nested:
+      depth: 2 # max depth to show in the collection tree
+      summary: '{{title}}' # optional summary for a tree node, defaults to the inferred title field
+      # adding a path object allows editing the path of entries
+      # moving an existing entry will move the entire sub tree of the entry to the new location
+      path: { widget: string, index_file: 'index' }
+    fields: # The fields for each document, usually in front matter
+      - {label: "Título", name: "title", widget: "string"}
+      - {label: "Data de Publicação", name: "date", widget: "datetime"}
+      - {label: "Imagem de Destaque", name: "image", widget: "image"}
+      - {label: "Descrição", name: "description", widget: "string"}
+      - {label: "Corpo", name: "body", widget: "markdown"}
+      - {label: "Tipo", name: "type", widget: "hidden", default: "noticias"}
+
+  - name: "noticia-antiga" # Used in routes, e.g., /admin/collections/blog
+    label: "Notícias Anteriores" # Used in the UI
+    label_singular: "Notícia"
+    folder: "www/content/portuguese/noticias" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{slug}}/index" # Filename template, e.g., YYYY-MM-DD-title.md
+    nested:
+      depth: 2 # max depth to show in the collection tree
+      summary: '{{title}}' # optional summary for a tree node, defaults to the inferred title field
+      # adding a path object allows editing the path of entries
+      # moving an existing entry will move the entire sub tree of the entry to the new location
+      path: { widget: string, index_file: 'index' }
+    fields: # The fields for each document, usually in front matter
+      - {label: "Título", name: "title", widget: "string"}
+      - {label: "Data de Publicação", name: "date", widget: "datetime"}
+      - {label: "Imagem de Destaque", name: "image", widget: "image"}
+      - {label: "Descrição", name: "description", widget: "string"}
+      - {label: "Corpo", name: "body", widget: "markdown"}
+      - {label: "Tipo", name: "type", widget: "hidden", default: "noticias"}

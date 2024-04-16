@@ -12,6 +12,59 @@
   <!-- Include the script that builds the page and powers Decap CMS -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 
+  <script>
+    CMS.registerEditorComponent({
+
+      label: 'Imagem',
+      id: 'image2',
+      fromBlock: function(match) {
+        console.log('to aqui 1');
+          var obj = match && {
+            image: match[2],
+            alt: match[1] + 'hahaha',
+            title: match[4],
+          };
+          return obj;
+        },
+      toBlock: function(obj) {
+        //{ alt, image, title }
+        console.log('to aqui 2, imagem: ' + obj.image2);
+        console.log(obj);
+        return obj.image2 ? `![${obj.alt || ''}](${'{{< img >}}' + obj.image2}${obj.title ? ` "${obj.title.replace(/"/g, '\\"')}"` : ''})` : '';
+      },
+      toPreview: function(obj, getAsset, fields) {
+        //{ alt, image2, title }
+        console.log('to aqui');
+        const imageField = fields?.find(f => f.get('widget') === 'image');
+        console.log('olha isso: ' + imageField);
+        const src = imageField ? getAsset(image2, imageField) : 'nulo';
+        return `<img aa src={src || ''} alt={alt || ''} title={title || ''} />`;
+      },
+      pattern: /^!\[(.*)\]\({{< img >}}(.*?)(\s"(.*)")?\)$/,
+      fields: [
+        {
+          label: 'Imagem',
+          name: 'image2',
+          widget: 'image',
+          media_library: {
+            allow_multiple: false,
+          },
+        },
+        {
+          label: 'Alt Text',
+          name: 'alt',
+        },
+        {
+          label: 'Title',
+          name: 'title',
+        },
+      ],
+
+
+    });
+    </script>
+
+  <!--
   <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
@@ -119,5 +172,6 @@
     };
 */
   </script>
+  -->
 </body>
 </html>

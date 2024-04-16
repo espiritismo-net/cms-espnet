@@ -11,8 +11,8 @@ backend:
 
 #media_folder: "www/static/images/cms"
 #public_folder: "/images/cms"
-media_folder: "www/static/imagens/noticias"
-public_folder: "noticias"
+media_folder: "www/static/imagens/cms"
+public_folder: "cms"
 locale: 'pt'
 
 collections:
@@ -33,12 +33,13 @@ collections:
       - {label: "Data de Publicação", name: "date", widget: "datetime"}
       - {label: "Imagem de Destaque", name: "image", widget: "image"}
       - {label: "Descrição", name: "description", widget: "string"}
-      - {label: "Corpo", name: "body", widget: "markdown"}
+      - {label: "Corpo", name: "body", widget: "markdown", editor_components: ["image2"]}
       - {label: "Tipo", name: "type", widget: "hidden", default: "noticias"}
 
   - name: "noticia-antiga" # Used in routes, e.g., /admin/collections/blog
     label: "Notícias Anteriores" # Used in the UI
     label_singular: "Notícia"
+    editor_components: "code-block"
     folder: "www/content/portuguese/noticias" # The path to the folder where the documents are stored
     create: true # Allow users to create new documents in this collection
     slug: "{{slug}}/index" # Filename template, e.g., YYYY-MM-DD-title.md
@@ -53,5 +54,5 @@ collections:
       - {label: "Data de Publicação", name: "date", widget: "datetime"}
       - {label: "Imagem de Destaque", name: "image", widget: "image"}
       - {label: "Descrição", name: "description", widget: "string"}
-      - {label: "Corpo", name: "body", widget: "markdown"}
+      - {label: "Corpo", name: "body", widget: "markdown", editor_components: ["image2"]}
       - {label: "Tipo", name: "type", widget: "hidden", default: "noticias"}

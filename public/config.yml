@@ -3,16 +3,16 @@ backend:
   #repo: "espiritismo-net/netlifycms-oauth-server"
   repo: "espiritismo-net/hugo-espnet"
   #branch: "decap-content" # Branch to update (optional; defaults to master)
-  branch: "sem-imagens2" # Branch to update (optional; defaults to master)
+  branch: "cms-sem-imagens" # Branch to update (optional; defaults to master)
   site_domain: "editor-site-firebase.web.app"
   #base_url: "https://git-gateway.espiritismo.net"
   base_url: https://us-central1-git-oauth-functions-firebase.cloudfunctions.net
   auth_endpoint: "/oauth/auth"
 
-#media_folder: "www/static/images/cms"
-#public_folder: "/images/cms"
-media_folder: "www/static/imagens/cms"
-public_folder: "cms"
+media_folder: "/www/static/imagens/cms"
+public_folder: "/imagens/cms"
+#media_folder: "www/static/imagens/cms"
+#public_folder: "cms"
 locale: 'pt'
 
 collections:

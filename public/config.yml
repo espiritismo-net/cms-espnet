@@ -9,10 +9,11 @@ backend:
   base_url: https://us-central1-git-oauth-functions-firebase.cloudfunctions.net
   auth_endpoint: "/oauth/auth"
 
+
+#media_folder: "www/static/images/cms"
+#public_folder: "/images/cms"
 media_folder: "/www/static/imagens/cms"
 public_folder: "/imagens/cms"
-#media_folder: "www/static/imagens/cms"
-#public_folder: "cms"
 locale: 'pt'
 
 collections:

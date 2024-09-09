@@ -30,7 +30,7 @@
         //{ alt, image, title }
         console.log('to aqui 2, imagem: ' + obj.image2);
         console.log(obj);
-        //return obj.image2 ? `![${obj.alt || ''}](${'{{< img >}}' + obj.image2}${obj.title ? ` "${obj.title.replace(/"/g, '\\"')}"` : ''})` : '';
+
         return obj.image2 ? `![${obj.alt || ''}](${obj.image2}${obj.title ? ` "${obj.title.replace(/"/g, '\\"')}"` : ''})` : '';
       },
       toPreview: function(obj, getAsset, fields) {
@@ -41,7 +41,10 @@
         const src = imageField ? getAsset(image2, imageField) : 'nulo';
         return `<img aa src={src || ''} alt={alt || ''} title={title || ''} />`;
       },
-      pattern: /^!\[(.)\]\((.?)\s*("(.*)")?\)$/,
+
+    //  pattern: /^!\[(.)\]\((.?)\s*("(.*)")?\)$/, quando vc alterou 08-09
+      pattern: /^!\[(.*)\]\((.*?)\s*("(.*)")?\)$/,
+
       fields: [
         {
           label: 'Imagem',

@@ -14,45 +14,29 @@
 
   <script>
     CMS.registerEditorComponent({
-
       label: 'Imagem',
       id: 'image2',
       fromBlock: function(match) {
-        console.log('to aqui 1');
-          var obj = match && {
-            image: match[2],
-            alt: match[1] + 'hahaha',
-            title: match[4],
-          };
-          return obj;
-        },
+        return match && {
+          image: match[2],
+          alt: match[1],
+          title: match[4],
+        };
+      },
       toBlock: function(obj) {
-        //{ alt, image, title }
-        console.log('to aqui 2, imagem: ' + obj.image2);
-        console.log(obj);
-
         return obj.image2 ? `![${obj.alt || ''}](${obj.image2}${obj.title ? ` "${obj.title.replace(/"/g, '\\"')}"` : ''})` : '';
       },
       toPreview: function(obj, getAsset, fields) {
-        //{ alt, image2, title }
-        console.log('to aqui');
         const imageField = fields?.find(f => f.get('widget') === 'image');
-        console.log('olha isso: ' + imageField);
-        const src = imageField ? getAsset(image2, imageField) : 'nulo';
-        return `<img aa src={src || ''} alt={alt || ''} title={title || ''} />`;
+        const src = imageField ? getAsset(obj.image2, imageField) : 'nulo';
+        return `<img src="${src || ''}" alt="${obj.alt || ''}" title="${obj.title || ''}" />`;
       },
-
-    //  pattern: /^!\[(.)\]\((.?)\s*("(.*)")?\)$/, quando vc alterou 08-09
       pattern: /^!\[(.*)\]\((.*?)\s*("(.*)")?\)$/,
-
       fields: [
         {
           label: 'Imagem',
           name: 'image2',
           widget: 'image',
-          media_library: {
-            allow_multiple: false,
-          },
         },
         {
           label: 'Alt Text',
@@ -63,119 +47,44 @@
           name: 'title',
         },
       ],
-
-
-    });
-    </script>
-
-  <!--
-  <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
-    import { getAuth, getRedirectResult, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
+    });   
   
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-      apiKey: "AIzaSyAc-iuisVokJ5hHUiXAzfo_KrjxXrEmWYA",
-      authDomain: "editor-site-firebase.firebaseapp.com",
-      projectId: "editor-site-firebase",
-      storageBucket: "editor-site-firebase.appspot.com",
-      messagingSenderId: "6032123007",
-      appId: "1:6032123007:web:58f30add469d77b07c4b4a",
-      measurementId: "G-41KHD6S1MY"
-    };
-  
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
-
-    getRedirectResult(auth)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access Google APIs.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-
-        // The signed-in user info.
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-        alert('ok');
-      }).catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-        alert('not ok');
-      });
-      
-/*
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-      }).catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
-*/
-/*
-    // Initialize the FirebaseUI Widget using Firebase.
-    var ui = new firebaseui.auth.AuthUI(app.auth());
-
-    var uiConfig = {
-      callbacks: {
-        signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-          // User successfully signed in.
-          // Return type determines whether we continue the redirect automatically
-          // or whether we leave that to developer to handle.
-          return true;
-        },
-        uiShown: function() {
-          // The widget is rendered.
-          // Hide the loader.
-          document.getElementById('loader').style.display = 'none';
-        }
+    CMS.registerEditorComponent({
+      label: 'Botão',
+      id: 'button',
+      fromBlock: function(match) {
+          return match && {
+              href: match[2],
+              text: match[1],
+              class: match[4]
+          };
       },
-      // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-      signInFlow: 'popup',
-      signInSuccessUrl: '<url-to-redirect-to-on-success>',
-      signInOptions: [
-        // Leave the lines as is for the providers you want to offer your users.
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-        firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-        firebase.auth.GithubAuthProvider.PROVIDER_ID,
-        firebase.auth.EmailAuthProvider.PROVIDER_ID,
-        firebase.auth.PhoneAuthProvider.PROVIDER_ID
+      toBlock: function(obj) {
+          return obj.button ? `<button href="${obj.href}" class="${obj.class || ''}">${obj.text}</button>` : '';
+      },
+      toPreview: function(obj) {
+          return `<button>${obj.text}</button>`;
+      },
+      pattern: /^<button>(.*)<\/button>$/,
+      fields: [
+          {
+              label: 'Link',
+              name: 'href',
+              widget: 'text',
+          },
+          {
+              label: 'Texto do Botão',
+              name: 'text',
+              widget: 'text',
+          },
+          {
+              label: 'Classe CSS',
+              name: 'class',
+              widget: 'text',
+          },
       ],
-      // Terms of service url.
-      tosUrl: '<your-tos-url>',
-      // Privacy policy url.
-      privacyPolicyUrl: '<your-privacy-policy-url>'
-    };
-*/
-  </script>
-  -->
+  });  
+  </script>    
 </body>
 </html>
+

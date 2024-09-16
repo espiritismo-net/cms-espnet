@@ -57,3 +57,23 @@ collections:
       - {label: "Descrição", name: "description", widget: "string"}
       - {label: "Corpo", name: "body", widget: "markdown", editor_components: ["image2"]}
       - {label: "Tipo", name: "type", widget: "hidden", default: "noticias"}
+
+    
+  - name: "congresso" # Used in routes, e.g., /admin/collections/blog
+    label: "Congresso EspNet" # Used in the UI
+    label_singular: "Congresso"
+    folder: "www/content/portuguese/congresso_espirita" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{slug}}/index" # Filename template, e.g., YYYY-MM-DD-title.md
+    nested:
+      depth: 3 # max depth to show in the collection tree
+      summary: '{{title}}' # optional summary for a tree node, defaults to the inferred title field
+      # adding a path object allows editing the path of entries
+      # moving an existing entry will move the entire sub tree of the entry to the new location
+      path: { widget: string, index_file: 'index' }
+    fields: # The fields for each document, usually in front matter
+      - {label: "Título", name: "title", widget: "string"}
+      - {label: "Data de Publicação", name: "date", widget: "datetime"}
+      - {label: "Corpo", name: "body", widget: "markdown", editor_components: ["image2"]}
+      - {label: "Tipo", name: "type", widget: "hidden", default: "pagina"}
+      - {label: "URL", name: "url", widget: "string", default: ""}      

@@ -16,6 +16,9 @@ media_folder: "/www/static/imagens/cms"
 public_folder: "/imagens/cms"
 locale: 'pt'
 
+#workflow de publicação em lote
+publish_mode: editorial_workflow
+
 collections:
   - name: "noticia" # Used in routes, e.g., /admin/collections/blog
     label: "Notícias Recentes" # Used in the UI
@@ -57,23 +60,25 @@ collections:
       - {label: "Descrição", name: "description", widget: "string"}
       - {label: "Corpo", name: "body", widget: "markdown", editor_components: ["image2"]}
       - {label: "Tipo", name: "type", widget: "hidden", default: "noticias"}
-
-    
-  - name: "congresso" # Used in routes, e.g., /admin/collections/blog
-    label: "Congresso EspNet" # Used in the UI
-    label_singular: "Congresso"
-    folder: "www/content/portuguese/congresso_espirita" # The path to the folder where the documents are stored
-    create: true # Allow users to create new documents in this collection
-    slug: "{{slug}}/index" # Filename template, e.g., YYYY-MM-DD-title.md
-    nested:
-      depth: 3 # max depth to show in the collection tree
-      summary: '{{title}}' # optional summary for a tree node, defaults to the inferred title field
-      # adding a path object allows editing the path of entries
-      # moving an existing entry will move the entire sub tree of the entry to the new location
-      path: { widget: string, index_file: 'index' }
-    fields: # The fields for each document, usually in front matter
-      - {label: "Título", name: "title", widget: "string"}
-      - {label: "Data de Publicação", name: "date", widget: "datetime"}
-      - {label: "Corpo", name: "body", widget: "markdown", editor_components: ["image2"]}
+      
+  - name: "congresso_directories"
+    label: "Congresso Espírita - DIRETÓRIOS"
+    folder: "www/content/portuguese/teste_diretorio"
+    #folder: "www/content/portuguese/congresso_espirita"
+    create: true
+    #slug: "{{slug}}/_index"
+    fields:
+      - { label: "Título do Diretório", name: "title", widget: "string" }
+  
+  - name: "congresso_files"
+    label: "Congresso Espírita - ARQUIVOS"
+    folder: "www/content/portuguese/teste_diretorio"
+    #folder: "www/content/portuguese/congresso_espirita"
+    create: true
+    slug: "{{directory}}/{{slug}}"
+    fields:
+      - { label: "Diretório", name: "directory", widget: "relation", collection: "congresso_directories", search_fields: ["title"], value_field: "{{slug}}", display_fields: ["title"] }
+      - { label: "Título do Arquivo", name: "title", widget: "string" }
+      - { label: "Conteúdo", name: "body", widget: "markdown" }
       - {label: "Tipo", name: "type", widget: "hidden", default: "pagina"}
-      - {label: "URL", name: "url", widget: "string", default: ""}      
+      - {label: "URL", name: "url", widget: "string", default: "", required: false}

@@ -68,7 +68,7 @@ collections:
     create: true
     #slug: "{{slug}}/_index"
     fields:
-      - { label: "Título do Diretório", name: "title", widget: "string" }
+     - { label: "Título do Diretório", name: "title", widget: "string" }
   
   - name: "congresso_files"
     label: "Congresso Espírita - ARQUIVOS"
@@ -76,9 +76,12 @@ collections:
     #folder: "www/content/portuguese/congresso_espirita"
     create: true
     slug: "{{directory}}/{{slug}}"
+   
+    nested:
+        depth: 2  # Ajuste para a profundidade desejada, se houver mais níveis
     fields:
-      - { label: "Diretório", name: "directory", widget: "relation", collection: "congresso_directories", search_fields: ["title"], value_field: "{{slug}}", display_fields: ["title"] }
-      - { label: "Título do Arquivo", name: "title", widget: "string" }
-      - { label: "Conteúdo", name: "body", widget: "markdown" }
-      - {label: "Tipo", name: "type", widget: "hidden", default: "pagina"}
-      - {label: "URL", name: "url", widget: "string", default: "", required: false}
+    - { label: "Diretório", name: "directory", widget: "relation", collection: "congresso_directories", search_fields: ["title"], value_field: "{{slug}}", display_fields: ["title"] }
+    - { label: "Título do Arquivo", name: "title", widget: "string" }
+    - { label: "Conteúdo", name: "body", widget: "markdown" }
+    - {label: "Tipo", name: "type", widget: "hidden", default: "pagina"}
+    - {label: "URL", name: "url", widget: "string", default: "", required: false}
